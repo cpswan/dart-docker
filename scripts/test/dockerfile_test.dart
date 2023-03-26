@@ -10,7 +10,7 @@ import 'package:test/test.dart';
 import 'utils.dart';
 
 var version = DartSdkVersion('stable', Version.parse('3.14.1'),
-    {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi'}, fakeRead);
+    {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi', 'riscv': 'jkl'}, fakeRead);
 
 void main() {
   test('build dockerfile', () {
@@ -20,6 +20,7 @@ ENV DART_VERSION        3.14.1
 ENV DART_SHA256_X64     abc
 ENV DART_SHA256_ARM     def
 ENV DART_SHA256_ARM64   ghi
+ENV DART_SHA256_RISCV64 jkl
 ''';
     var dockerfile = buildDockerfile(version, dockerfileTemplate);
     expect(dockerfile, expected);

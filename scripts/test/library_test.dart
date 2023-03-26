@@ -27,7 +27,7 @@ Architectures: amd64, arm32v7, arm64v8
 Directory: stable/bullseye
 
 Tags: 2.13.0-211.6.beta-sdk, beta-sdk, 2.13.0-211.6.beta, beta
-Architectures: amd64, arm32v7, arm64v8
+Architectures: amd64, arm32v7, arm64v8, riscv64
 Directory: beta/bullseye
 ''';
 

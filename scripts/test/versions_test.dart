@@ -9,20 +9,20 @@ import 'package:test/test.dart';
 import 'utils.dart';
 
 final stable = DartSdkVersion('stable', Version.parse('2.12.4'),
-    {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi'}, fakeRead);
+    {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi', 'riscv64': 'jkl'}, fakeRead);
 final beta = DartSdkVersion('beta', Version.parse('2.13.0-211.6.beta'),
-    {'x64': 'jmn', 'arm': 'opq', 'arm64': 'rst'}, fakeRead);
+    {'x64': 'jmn', 'arm': 'opq', 'arm64': 'rst', 'riscv64': 'uvw'}, fakeRead);
 
 void main() {
   test('fromJson', () {
     var versions = versionsFromJson(<String, dynamic>{
       'stable': {
         'version': '2.12.4',
-        'sha256': {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi'},
+        'sha256': {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi', 'riscv64': 'jkl'},
       },
       'beta': {
         'version': '2.13.0-211.6.beta',
-        'sha256': {'x64': 'jmn', 'arm': 'opq', 'arm64': 'rst'},
+        'sha256': {'x64': 'jmn', 'arm': 'opq', 'arm64': 'rst', 'riscv64': 'uvw'},
       },
     }, fakeRead);
 
@@ -43,9 +43,9 @@ void main() {
     expect(versions['beta']?.tags,
         ['2.13.0-211.6.beta-sdk', 'beta-sdk', '2.13.0-211.6.beta', 'beta']);
     expect(versions['stable']?.sha256,
-        {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi'});
+        {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi', 'riscv64': 'jkl'});
     expect(
-        versions['beta']?.sha256, {'x64': 'jmn', 'arm': 'opq', 'arm64': 'rst'});
+        versions['beta']?.sha256, {'x64': 'jmn', 'arm': 'opq', 'arm64': 'rst', 'riscv64': 'uvw'});
   });
 
   test('update, no update', () async {
@@ -67,13 +67,15 @@ void main() {
           'def *dartsdk-linux-arm-release.zip',
       '/dart-archive/channels/stable/release/3.13.2/sdk/dartsdk-linux-arm64-release.zip.sha256sum':
           'ghi *dartsdk-linux-arm64-release.zip',
+      '/dart-archive/channels/stable/release/3.13.2/sdk/dartsdk-linux-riscv64-release.zip.sha256sum':
+          'jkl *dartsdk-linux-riscv64-release.zip',
     });
     var version = DartSdkVersion('stable', Version.parse('2.12.4'), {}, read);
     expect(await version.update(), true);
     expect(
         version,
         DartSdkVersion('stable', Version.parse('3.13.2'),
-            {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi'}, fakeRead));
+            {'x64': 'abc', 'arm': 'def', 'arm64': 'ghi', 'riscv64': 'jkl'}, fakeRead));
   });
 
   test('verify version succeeds', () async {
